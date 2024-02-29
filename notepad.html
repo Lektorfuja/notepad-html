@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple HTML Notepad</title>
+</head>
+<body>
+
+<h2>Simple HTML Notepad</h2>
+<textarea id="notepad" rows="10" cols="50">Type something here...</textarea><br>
+<button onclick="saveData()">Save as HTML</button>
+
+<script>
+function saveData() {
+    // Get the data from the textarea
+    var data = document.getElementById("notepad").value;
+    // Format the data with HTML structure
+    var htmlContent = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Notepad Data</title></head><body><pre>' + data + '</pre></body></html>';
+    // Create a Blob with the data
+    var blob = new Blob([htmlContent], { type: 'text/html' }),
+        url = window.URL.createObjectURL(blob),
+        a = document.createElement('a');
+    
+    // Create a link and set as download
+    a.href = url;
+    a.download = 'notepad_data.html';
+    // Append link to body, click it, and then remove it
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    // Revoke the old URL
+    window.URL.revokeObjectURL(url);
+}
+</script>
+
+</body>
+</html>
+
